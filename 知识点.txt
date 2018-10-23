@@ -1,0 +1,198 @@
+参考项目：https://blog.csdn.net/u010958446/article/details/61624511
+
+1.列表
+
+import React,{ Component } from 'react';
+import {View,Text,Button,StyleSheet,Image,FlatList} from 'react-native';
+import {createBottomTabNavigator,createStackNavigator,createDrawerNavigator} from 'react-navigation';
+
+
+class BookList extends  Component {
+    constructor(props){
+        super(props);
+        this.state={
+          data:[],
+          loaded:false,
+        };
+        this.fetchData= this.fetchData.bind(this);
+
+    }
+
+    fetchData(){
+        fetch('http://www.developer1.cn:8001/api.php')
+            .then((response) => response.json())
+            .then((responseData) => {
+                // 注意，这里使用了this关键字，为了保证this在调用时仍然指向当前组件，我们需要对其进行“绑定”操作
+                console.log(responseData);
+                this.setState({
+                    data: this.state.data.concat(responseData),
+                    loaded: true,
+                });
+            });
+    }
+
+
+    componentDidMount(){
+        this.fetchData();
+    }
+
+    render(){
+
+        if(!this.state.loaded){
+            return(
+                <View style={{flex:1,flexDirection:"row",justifyContent:"center",alignItems:'center',backgroundColor:"#F5FCFF"}}>
+                    <Text>正在加载数据...</Text>
+                </View>
+            );
+        }
+
+        return(
+
+           <View style={{flex:1,justifyContent:'flex-start'}}>
+
+
+                     <View style={{flexDirection: 'row',height:100}}>
+                         <View style={{width:150,height:100,backgroundColor:'red'}}>
+                             <Image source={{uri:'http://d.lanrentuku.com/down/png/1807/10shuguopng.jpg'}}  style={{width:150,height:100}} />
+                         </View>
+                         <View style={{flex:1,height:100,justifyContent:'center',backgroundColor:'skyblue'}}>
+                             <Text style={{textAlign: 'center'}}>标题：java从入门到精通</Text>
+                             <Text style={{textAlign:'center'}}>出版社：人民大学出版社  作者：高洛峰</Text>
+                             <Text style={{textAlign:'center'}}>价格：350，页数：00页</Text>
+                         </View>
+                     </View>
+
+                         <View style={{height:100,flexDirection: 'row',paddingTop:10}}>
+                             <View style={{width:150,height:100,backgroundColor:'red'}}>
+                                 <Image source={{uri:'http://d.lanrentuku.com/down/png/1807/10shuguopng.jpg'}}  style={{width:150,height:100}} />
+                             </View>
+                             <View style={{flex:1,height:100,justifyContent:'center',backgroundColor:'skyblue'}}>
+                                 <Text style={{textAlign: 'center'}}>标题：java从入门到精通</Text>
+                                 <Text style={{textAlign:'center'}}>出版社：人民大学出版社  作者：高洛峰</Text>
+                                 <Text style={{textAlign:'center'}}>价格：350，页数：00页</Text>
+                             </View>
+                         </View>
+
+
+                     </View>
+        );
+    }
+
+    renderData({item}){
+        return(
+        <View style={{flexDirection: 'row',height:100}}>
+            <View style={{width:150,height:100,backgroundColor:'red'}}>
+                <Image source={{uri:item.src}}  style={{width:150,height:100}} />
+            </View>
+            <View style={{flex:1,height:100,justifyContent:'center',backgroundColor:'skyblue'}}>
+                <Text style={{textAlign: 'center'}}>标题：java从入门到精通</Text>
+                <Text style={{textAlign:'center'}}>出版社：人民大学出版社  作者：高洛峰</Text>
+                <Text style={{textAlign:'center'}}>价格：350，页数：00页</Text>
+            </View>
+        </View>
+        );
+    }
+}
+
+
+
+const styles = StyleSheet.create({
+    box1:{
+        width:50,height:50
+    }
+    }
+
+);
+
+export default BookList;
+
+
+2.列表跳转详情，父组件要把navigate传给子组件，否则报错：
+ReactNative——问题：undefined is not an object (evaluating _this2.props.navigation.navigate)或
+ReactNative——问题：undefined is not an object (evaluating _this3.props.navigation.navigate)
+
+解决方法：
+https://blog.csdn.net/qq_28484355/article/details/81298311
+
+版权声明：本文为博主原创文章，未经博主允许不得转载。	https://blog.csdn.net/qq_28484355/article/details/81298311
+在使用 this.props.navigation.navigate('home') 执行页面跳转动作时，红屏报错：
+
+undefined is not an object (evaluating _this2.props.navigation.navigate)
+
+这个错误的原因是：在子组件中执行跳转动作，但跳转动作调用方法navigate并没有传递给子组件。
+
+解决办法：父组件将navigate方法传递给子组件，子组件拿到后执行跳转动作。
+
+例如：
+
+export default class MainPage extends Component {
+    render() {
+        return (
+            <View>
+                <TopView navigate={this.props.navigation.navigate}/>
+            </View>
+        );
+    }
+}
+class TopView extends Component{
+    render(){
+        return (
+            <View>
+                <Button onPress={()=>{this.props.navigate('...');}}  />
+            </View>
+        );
+    }
+}
+ 
+
+
+我自己的解决方法：
+class Book extends Component{
+    static navigationOptions={
+        title:'图书',
+        tabBarIcon: ({}) => (
+            <Image
+                source={{uri:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3249694114,25894522&fm=26&gp=0.jpg'}}
+                style={[{height: 24, width: 24}, {}]}
+            />
+        ),
+    };
+    render() {
+        return (
+            <BookList navigate={this.props.navigation.navigate} />
+        );
+    };
+}
+
+
+BookList组件中用法：
+ this.props.navigate('bookDetail')
+
+
+
+2018-10-22
+flatlist的每一项，尽量加上key键值
+
+出现Warning:Failed child context type: Invalid child context 'virtualizedCell.cellKey' of type 'number' supplied to 'CellRenderer',expected 'string'的错误（如下图示）
+https://blog.csdn.net/xihairanfeng/article/details/81509304
+
+这里是引用flatlist出现需要string问题，将keyExtractor对应的函数加上toString()（toString的作用就是将数字转换成字符串）即可
+
+<FlatList
+     style={styles.bgStyle}
+     data={this.data}
+     scrollEnabled={false}
+     keyExtractor={this._keyExtractor}
+     renderItem={this._renderItem}
+/>
+函数部分加上toString()即可：
+
+ _keyExtractor = (item, index) => item.id.toString();
+
+
+
+图书爬去网站：
+http://www.bookschina.com/24hour/1_0_1/  第一页
+http://www.bookschina.com/24hour/1_0_2/  第二页 ...
+
+
