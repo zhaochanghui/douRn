@@ -13,6 +13,9 @@ import {TabNavigator,createBottomTabNavigator,createStackNavigator,createSwitchN
 import BookList from './android_views/book/book_list';
 import BookDetail from './android_views/book/book_detail';
 
+import MovieList from './android_views/movie/movie_list';
+
+
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -63,13 +66,8 @@ class Movie extends Component{
     render(){
         const { navigate } = this.props.navigation;
         return(
-            <View style={{flex:1}}>
-                <Show desc='movie moive' />
-                <Button
-                    onPress={() => navigate('detail', { user: 'Lucy' })}
-                    title='go detail'
-                />
-            </View>
+
+            <MovieList navigate={navigate}/>
         );
     }
 }
