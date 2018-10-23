@@ -33,7 +33,7 @@ class Api
             $rs[$k]['img'] = $v['img'][0]['data-original'];  //作者
             $rs[$k]['publisher'] = $publisher[$k]['#text'][0];  //作者
             $rs[$k]['price'] = $price[$k]['#text'][0];  //作者
-            $rs[$k]['key'] = $k;  //作者
+            $rs[$k]['key'] = $k+1;  //作者
 
         }
 
