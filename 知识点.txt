@@ -321,4 +321,9 @@ dispatch前： {counter: 0}
 </html>
 
 
+https://blog.csdn.net/u011272795/article/details/72855899/
+页面标题为：前一个页面传来的参数，设置方法
+ static navigationOptions = ({navigation}) => ({
+        title: ` ${navigation.state.params.user.name}`,       //前一个页面传来的对象的name属性
+    })
 

@@ -52,15 +52,35 @@ class Api
         $info = [];
         $specialist = $saw->get('.specialist')->toArray();
         $brief = $saw->get('.brief p')->toArray();
-        $excerpt = $saw->get('.excerpt p')->toArray();
+        $author_desc = $saw->get('.excerpt p')->toArray();
+        $name = $saw->get('.padLeft10 h1')->toArray();
+        $author= $saw->get('.author a')->toArray();
+        $publisher = $saw->get('.publisher a')->toArray();
+        $publisher_time = $saw->get('.publisher i')->toArray();
+        $otherInfor_i = $saw->get('.otherInfor i')->toArray();
+        $otherInfor_em = $saw->get('.otherInfor em')->toArray();
+        $sellPriceTit = $saw->get('.priceWrap .sellPrice')->toArray();
+        $discount = $saw->get('.priceWrap .discount')->toArray();
+        $old_price = $saw->get('.priceWrap .price')->toArray();
+
+
 
 
         $info['brief'] = trim($brief[0]['#text'][0]);  //内容简介
-        $info['excerpt'] = trim($excerpt[0]['#text'][0]);  //作者简介
+        $info['author_desc'] = trim($author_desc[0]['#text'][0]);  //作者简介
 
         $info['special']=trim($specialist[0]['p'][0]['#text'][0]);  //本书特色
+        $info['title']=$name[0]['#text'][0];  //本书特色
+        $info['author']=$author[0]['#text'][0];  //本书特色
+        $info['publisher']=$publisher[0]['#text'][0];  //本书特色
+        $info['publisher_time']=$publisher_time[0]['#text'][0];  //本书特色
+        $info['page_kai']=$otherInfor_em[0]['#text'][0];  //本书特色
+        $info['pages']=$otherInfor_i[0]['#text'][0];  //本书特色
+        $info['price']=$sellPriceTit[0]['#text'][0];  //本书特色
+        $info['discount']=$discount[0]['#text'][0];  //本书特色
+        $info['oldprice']=$old_price[0]['#text'][0];  //本书特色
 
-        var_dump($info);
+        echo json_encode($info);
     }
 
 }
