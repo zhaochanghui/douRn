@@ -196,3 +196,129 @@ http://www.bookschina.com/24hour/1_0_1/  第一页
 http://www.bookschina.com/24hour/1_0_2/  第二页 ...
 
 
+2018-10-23:
+redux入门： https://github.com/kenberkeley/redux-simple-tutorial
+
+最简单的例子：这个都看不懂，别学redux
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./redux.min.js"></script>
+</head>
+<body>
+	<script>
+	function add(){
+		return {type:'add'};
+	}
+
+	function del(){
+		return {type:'del'};
+	}
+
+	function reducer(state,action){
+		state = state || {counter:1};
+		switch(action.type){
+			case 'add':
+				return {counter: state.counter+1};
+			case 'del':
+				return {counter: state.counter-1};
+			default:
+				return state;
+		}
+	}
+
+	store = Redux.createStore(reducer);
+	console.log(store.getState());
+
+	store.dispatch(add());
+	console.log(store.getState());
+
+	store.dispatch(del());
+	console.log(store.getState());
+
+	/*
+输出：
+ {counter: 1}
+ {counter: 2}
+ {counter: 1}
+	 */
+	</script>
+</body>
+</html>
+
+
+高级例子2：
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./redux.min.js"></script>
+</head>
+<body>
+	<script>
+
+	function add(){
+		return {type:'add'};
+	}
+
+	function del(){
+		return {type:'del'};
+	}
+
+
+	function reducer(state,action){
+		state = state || {counter:0};
+
+		switch(action.type){
+			case 'add':
+				return {counter: state.counter+1};
+			case 'del':
+				return {counter: state.counter-1};
+			default:
+				return state;
+		}
+	}
+
+	function printStateMiddleware(middlewareAPI){
+		return function(dispatch){
+			return function(action){
+				console.log('dispatch前：',middlewareAPI.getState());
+				var returnValue = dispatch(action);
+				console.log('dispatch后：',middlewareAPI.getState());
+				return returnValue;
+			};
+		};
+	}
+
+	/*
+	var enhancedCreateStore = Redux.applyMiddleware(printStateMiddleware)(Redux.createStore);
+	var store = enhancedCreateStore(reducer);
+	store的创建方法也可以采用下面优雅的方式：
+	*/
+	var store = Redux.createStore(
+		reducer,
+		Redux.applyMiddleware(printStateMiddleware)
+		);
+
+
+	store.dispatch(add());
+	store.dispatch(add());
+	store.dispatch(del());
+
+	/*
+dispatch前： {counter: 0}
+ dispatch后： {counter: 1}
+ dispatch前： {counter: 1}
+ dispatch后： {counter: 2}
+ dispatch前： {counter: 2}
+ dispatch后： {counter: 1}
+	 */
+	</script>
+</body>
+</html>
+
+
+
