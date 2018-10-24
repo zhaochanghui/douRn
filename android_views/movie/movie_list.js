@@ -21,8 +21,8 @@ class MovieList extends Component{
             <View style={{flex:1}}>
                 <Text> movie list  </Text>
                 <Button
-                    onPress={() => this.props.navigate('detail', { user: 'Lucy' })}
-                    title='go detail'
+                    onPress={() => this.props.navigate('movieDetail', { title: 'Lucy' })}
+                    title='go movie detail'
                 />
             </View>
         );

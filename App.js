@@ -14,6 +14,7 @@ import BookList from './android_views/book/book_list';
 import BookDetail from './android_views/book/book_detail';
 
 import MovieList from './android_views/movie/movie_list';
+import MovieDetail from './android_views/movie/movie_detail';
 
 
 const instructions = Platform.select({
@@ -153,6 +154,7 @@ const StackRoute=createStackNavigator({
     list:MyRoute,
     detail:Detail,
     bookDetail:BookDetail,
+    movieDetail:MovieDetail,
 },{
     initialRouteName: 'list',
 });

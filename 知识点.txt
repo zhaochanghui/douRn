@@ -1,4 +1,8 @@
 参考项目：https://blog.csdn.net/u010958446/article/details/61624511
+未来规划：https://www.v2ex.com/t/373645  行李住宿
+        https://android.myapp.com/myapp/detail.htm?apkName=com.travelingwithhotel.app.android
+
+重要命令：react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
 
 1.列表
 
@@ -327,3 +331,6 @@ https://blog.csdn.net/u011272795/article/details/72855899/
         title: ` ${navigation.state.params.user.name}`,       //前一个页面传来的对象的name属性
     })
 
+
+2018-10-24：webpack
+webpack:https://www.cnblogs.com/skylor/p/7008756.html
