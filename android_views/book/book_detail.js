@@ -24,7 +24,7 @@ class BookDetail extends  Component {
 
     fetchData(){
         let url = this.state.href;
-        fetch('http://www.developer1.cn:8001/index.php?a='+url)
+        fetch('http://www.developer1.cn:8001/api.php?a=1')
             .then((response) => response.json())
             .then((responseData) => {
                 // 注意，这里使用了this关键字，为了保证this在调用时仍然指向当前组件，我们需要对其进行“绑定”操作
@@ -57,10 +57,25 @@ class BookDetail extends  Component {
                 );
             }
 
+            let book = this.state.data;
+            alert(book.title)
 
             return(
-                <View>
-                    <Text>{this.state.data.title}</Text>
+                <View style={{flex:1}}>
+                    <View style={{flexDirection:'row',height:150,backgroundColor:'red'}}>
+                        <View style={{width:180,height:150}}>
+                            <Image source={{uri:'https://img3.doubanio.com/view/subject/l/public/s1727290.jpg'}} style={{width:180,height:150}}/>
+                        </View>
+                        <View style={{justifyContent:"space-around",paddingLeft: 20}}>
+                            <Text>2222</Text>
+                            <Text>2222</Text>
+                            <Text>2222</Text>
+                        </View>
+                    </View>
+
+                    <View>
+                    <Text>{this.props.navigation.state.params.title}</Text>
+                    </View>
                 </View>
             );
 

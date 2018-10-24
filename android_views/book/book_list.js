@@ -16,7 +16,7 @@ class BookList extends  Component {
     }
 
     fetchData(){
-        fetch('http://www.developer1.cn:8001/index.php')
+        fetch('http://www.developer1.cn:8001/api.php')
             .then((response) => response.json())
             .then((responseData) => {
                 // 注意，这里使用了this关键字，为了保证this在调用时仍然指向当前组件，我们需要对其进行“绑定”操作
@@ -89,10 +89,10 @@ class BookList extends  Component {
                 </TouchableOpacity>
             </View>
             <View style={{flex:1,height:100,justifyContent:'center',backgroundColor:'skyblue'}}>
-                <TouchableOpacity  onPress={() => this.props.navigate('bookDetail',{href:item.href,title:item.title})} >
+                <TouchableOpacity  onPress={() => this.props.navigate('bookDetail',{href:item.detail,title:item.title})} >
                 <Text style={{textAlign: 'center'}}>标题：{item.title}</Text>
-                <Text style={{textAlign:'center'}}>{item.publisher}  {item.author}</Text>
-                <Text style={{textAlign:'center'}}>{item.price}</Text>
+                <Text style={{textAlign:'center'}}>{item.info}</Text>
+                <Text style={{textAlign:'center'}}>{item.pj}</Text>
                 </TouchableOpacity>
             </View>
 
