@@ -89,7 +89,7 @@ class BookList extends  Component {
                 </TouchableOpacity>
             </View>
             <View style={{flex:1,height:100,justifyContent:'center',backgroundColor:'skyblue'}}>
-                <TouchableOpacity  onPress={() => this.props.navigate('bookDetail',{href:item.detail,title:item.title})} >
+                <TouchableOpacity  onPress={() => this.props.navigate('bookDetail',{index:item.key,title:item.title})} >
                 <Text style={{textAlign: 'center'}}>标题：{item.title}</Text>
                 <Text style={{textAlign:'center'}}>{item.info}</Text>
                 <Text style={{textAlign:'center'}}>{item.pj}</Text>

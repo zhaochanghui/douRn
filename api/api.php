@@ -5,7 +5,7 @@ header("Access-Control-Allow-Origin: *");
 include 'nokogiri.php';
 
 
-$a = isset($_GET['a'])?$_GET['a']:false;
+$a = isset($_GET['key'])?$_GET['key']:false;
 
 $str = file_get_contents('./d.txt');
 
@@ -23,14 +23,8 @@ if(!$a) {
 
 if($a){
 
-    $one = [];
-    foreach ($newarr as $k => $v) {
-        $one = $v;
-        $one['key'] = $k + 1;
-        break;
-//        $newarr[$k]['key'] = $k + 1;
-    }
-
+    $index = $a-1;
+    $one = $newarr[$index];
 
     $str1 = json_encode($one);
     echo $str1;

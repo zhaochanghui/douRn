@@ -16,15 +16,16 @@ class BookDetail extends  Component {
         this.state={
           data:[],
           loaded:false,
-          href:this.props.navigation.state.params.href,
+          index:this.props.navigation.state.params.index,
         };
         this.fetchData= this.fetchData.bind(this);
 
     }
 
     fetchData(){
-        let url = this.state.href;
-        fetch('http://www.developer1.cn:8001/api.php?a=1')
+        let index = this.state.index;
+        let url = 'http://www.developer1.cn:8001/api.php?key='+index;
+        fetch(url)
             .then((response) => response.json())
             .then((responseData) => {
                 // 注意，这里使用了this关键字，为了保证this在调用时仍然指向当前组件，我们需要对其进行“绑定”操作
@@ -38,6 +39,7 @@ class BookDetail extends  Component {
 
 
     componentDidMount(){
+
         this.fetchData();
 
     }
@@ -58,24 +60,40 @@ class BookDetail extends  Component {
             }
 
             let book = this.state.data;
-            alert(book.title)
+            let info = book.li;
 
             return(
                 <View style={{flex:1}}>
-                    <View style={{flexDirection:'row',height:150,backgroundColor:'red'}}>
+                    <View style={{flexDirection:'row',height:150}}>
                         <View style={{width:180,height:150}}>
                             <Image source={{uri:'https://img3.doubanio.com/view/subject/l/public/s1727290.jpg'}} style={{width:180,height:150}}/>
                         </View>
                         <View style={{justifyContent:"space-around",paddingLeft: 20}}>
-                            <Text>2222</Text>
-                            <Text>2222</Text>
-                            <Text>2222</Text>
+                            <View style={{}}><Text style={{fontSize:15}}>{book.author}</Text></View>
+                            <View style={{}}><Text style={{fontSize:15}}>{book.publisher}</Text></View>
+                            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                                <View style={{}}><Text style={{fontSize:15}}>{book.price}</Text></View>
+                                <View style={{marginLeft: 50}}><Text style={{fontSize:15}}>{info[6]}</Text></View>
+                            </View>
                         </View>
                     </View>
 
-                    <View>
-                    <Text>{this.props.navigation.state.params.title}</Text>
+                    <View style={{backgroundColor:'white',height:1,marginTop:8}}>
                     </View>
+                    <View style={{justifyContent:'flex-start',marginTop:8}}>
+                        <View style={{width:100,height:35,borderWidth:1,borderColor:"blue",lineHeight:35}}><Text style={{fontSize:20,textAlign:'center'}}>图书简介</Text></View>
+                        <View><Text>{book.intro}</Text></View>
+                    </View>
+
+
+                    <View style={{backgroundColor:'white',height:1,marginTop:8}}>
+                    </View>
+
+                    <View style={{justifyContent:'flex-start',marginTop:8}}>
+                        <View style={{width:100,height:35,borderWidth:1,borderColor:"blue",lineHeight:35}}><Text style={{fontSize:20,textAlign:'center'}}>作者简介</Text></View>
+                        <View><Text>{book.author_intro}</Text></View>
+                    </View>
+
                 </View>
             );
 
