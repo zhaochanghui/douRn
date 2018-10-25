@@ -62,8 +62,11 @@ class Spider
                 $v['publisher'] = $infoarr[count($infoarr)-3];
                 $v['author'] = $infoarr[count($infoarr)-4];
 
-                var_dump($v);die;
+                $v['li'] = $detailInfo['li'];
+                $v['intro'] = $detailInfo['intro'];
+                $v['author_intro'] = $detailInfo['author_intro'];
 
+    
                 $rs[$k] = $v;
             }
         }
@@ -71,8 +74,8 @@ class Spider
 
         var_dump($rs);
 
-//        echo json_encode($rs);
-//        file_put_contents('./d.txt',json_encode($rs));
+        echo json_encode($rs);
+        file_put_contents('./d.txt',json_encode($rs));
 
 
     }
@@ -95,11 +98,24 @@ class Spider
         $str = $ql->find('#info')->html();
         $arr = explode("<br>",$str);
 
+        foreach ($arr as $key => $value) {
+            $vv = str_replace('<br>','',$value);
+            $vv = strip_tags($vv);
+            $vv = $this->trimall($vv);
+            $arr[$key] = $vv;
+        }
+
+        unset($arr[11]);
+
+        $intro = $ql->find('#link-report .intro')->html();
+        $intro = strip_tags($intro);   
+        //$arr['intro'] = $intro;
+
+        $author_intro = $ql->find('.intro:eq(1)')->text();
+       // $arr['author_intro'] = $author_intro;
 
 
-         var_dump($arr);
-        die;
-
+        return  ['li'=>$arr,'intro'=>$intro,'author_intro'=>$author_intro];
     }
 
 
