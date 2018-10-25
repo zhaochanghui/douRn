@@ -53,6 +53,17 @@ class Spider
                 $detailInfo = $this->getDetail($v['detail']);
 
                 $v['key'] = $k + 1;
+
+                $info = $v['info'];
+                $infoarr = explode('/',$info);
+
+                $v['price'] = $infoarr[count($infoarr)-1];
+                $v['publish_time'] = $infoarr[count($infoarr)-2];
+                $v['publisher'] = $infoarr[count($infoarr)-3];
+                $v['author'] = $infoarr[count($infoarr)-4];
+
+                var_dump($v);die;
+
                 $rs[$k] = $v;
             }
         }
@@ -77,35 +88,16 @@ class Spider
     public function getDetail($url)
     {
 
-
-
-
         $ql = QueryList::get($url);
 
         $rt = [];
 
-        $name = $ql->find('#info>.pl')->text();
-        $all = $ql->find('#info')->text();
-
-        $name = explode(":",$name);
-
-        foreach ($name as $k=>$v){
-
-            if($k!=count($name)-1) {
-                $tmp = $name[$k + 1];
-                $tmp = $this->trimall($tmp);
-                $pos1 = strpos($all, $tmp);
-                var_dump($pos1);
-
-            }
-
-        }
+        $str = $ql->find('#info')->html();
+        $arr = explode("<br>",$str);
 
 
 
-
-
-        var_dump(strpos($all,'出版社'));
+         var_dump($arr);
         die;
 
     }
