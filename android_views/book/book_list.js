@@ -56,7 +56,7 @@ class BookList extends  Component {
                     <View style={{flex:8,height:40}}>
                     <TextInput
                         style={{height:38,backgroundColor: '#fff'}}
-                        placeholder='电影名...'
+                        placeholder='book name...'
                     />
                     </View>
                     <View style={{flex:2,padding:0,height:42}}>

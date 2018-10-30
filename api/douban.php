@@ -167,6 +167,8 @@ class Spider
             $m[$k] = $v;
         }
 
+        file_put_contents('./movie.txt',json_encode($m));
+
         var_dump($m);die;
     }
 
