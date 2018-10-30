@@ -171,12 +171,16 @@ class Spider
 
     //        $rt['title'] = $ql->find('h1')->text();
 
+        //主演，导演。等等
         $info = $ql->find('#info')->html();
 
+        //内容简介
         $intro = $ql->find('.related-info .hidden')->html();
+        $intro = strip_tags($intro);
+        $intro = $this->trimall($intro);
 
         $arr = explode('<br>',$info);
-        var_dump($intro);die;
+        var_dump($arr);die;
     }
 
 }
