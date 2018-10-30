@@ -156,11 +156,18 @@ class Spider
 
             //导演，主演，时间等
             $detail = $this->movieDetail($v["detailUrl"]);
+            //'intro'=>$intro,'actor'=>$actor,'showtime'=>$showtime,'label'=>$label,'info'=>$arr
+            $v['intro']=$detail['intro'];
+            $v['actor'] = $detail['actor'];
+            $v['showtime'] = $detail['showtime'];
+            $v['label'] = $detail['label'];
+            $v['info'] = $detail['info'];
+
 
             $m[$k] = $v;
         }
 
-        var_dump($m);
+        var_dump($m);die;
     }
 
     public function movieDetail($url)
@@ -180,7 +187,25 @@ class Spider
         $intro = $this->trimall($intro);
 
         $arr = explode('<br>',$info);
-        var_dump($arr);die;
+
+        //演员
+        $actor = $arr[2];
+        $actor = strip_tags($actor);
+
+        //上映时间
+        $showtime = $arr[6];
+        $showtime = strip_tags($showtime);
+
+        //类型
+        $label = $arr[3];
+        $label = strip_tags($label);
+
+
+        $rs = [
+            'intro'=>$intro,'actor'=>$actor,'showtime'=>$showtime,'label'=>$label,'info'=>$arr
+        ];
+
+        return $rs;
     }
 
 }
