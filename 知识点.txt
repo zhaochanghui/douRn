@@ -1,8 +1,14 @@
-参考项目：https://blog.csdn.net/u010958446/article/details/61624511
+参考项目： https://github.com/vczero/React-Dou
+          https://blog.csdn.net/u010958446/article/details/61624511
 未来规划：https://www.v2ex.com/t/373645  行李住宿
         https://android.myapp.com/myapp/detail.htm?apkName=com.travelingwithhotel.app.android
 
 重要命令：react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+
+
+打包apk：
+项目目录：keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+
 
 1.列表
 
@@ -336,4 +342,82 @@ https://blog.csdn.net/u011272795/article/details/72855899/
 webpack:https://www.cnblogs.com/skylor/p/7008756.html
  https://www.jianshu.com/p/be44baced73b
  https://github.com/TristanDongMaster/react-kit
+
+
+2018-10-28:
+React Naitve实现Text显示多行的功能
+https://blog.csdn.net/wwt831208/article/details/54693420
+大家好，今天讲一讲Text控件显示多行的功能，先给大家上一张图，看下效果：
+    |---------------------------------------------------------|
+    |                                                                            |
+    | 审核说明      这里是比较多的文字内容，需 |                                     
+    |                       要换行显示，看到的效果大致 |
+    |                       这样的                                         |           
+    |---------------------------------------------------------|
+                    模拟效果图
+
+
+本想将手机上的截图贴在这里，但是数据线经常出问题，连不上电脑，也就不折腾了，因为比较简单，通过上面这种方式，大家也可以看到效果。
+示例代码:
+ <View style = {[styles.row_style,styles.textBorder]}>
+    <Text numberOfLines={1} style = {[styles.baseFont,styles.marginRight10,styles.marginLeft15]}>审核说明</Text>
+    <Text numberOfLines={10} style = {[styles.rightFont,styles.paddingBottom15]}>这里是比较多的文字内容，需要换行显示，看到的效果大致就是这样的</Text>
+</View>
+
+
+解析:View设置行显示布局，View中包含了两个Text,看到的效果是前面的文字长度是固定的，后面的文字内容可能是变的在实际开发中，后面的Text需要换行显示，其中最重要的属性就是设置numberOfLines={10}，其中的数字可以设置的稍微大些如果不确定有多少文字。
+     没错，就是这么简单，再复杂的东西也是由这些简单的东西组成的。如果想在指定位置换行，可以给第二个Text的样式属性中增加固定的宽度。
+
+
+ScrollView
+详情页展示的内容多，比如内容介绍，作者介绍，一大堆文字，需要下拉才能展示全部需要的内容时，可以用到ReactNative中ScrollView组件
+https://blog.csdn.net/hejiasu/article/details/78991529
+例子：
+注意：ScrollView是继承自View，所以View中所有的属性同样适用于ScrollView。
+
+
+export default class App4 extends Component<{}> {
+    render() {
+      return (
+        <View style={styles.container}>
+            <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator = {false}
+                pagingEnabled = {true}>
+                {this.setUP()}
+            </ScrollView>
+        </View>
+      );
+    }s
+
+    setUP(){
+
+        var viewArr = [];
+        var colorArr = ['red','green','blue','yellow','purple'];
+        for (let i = 0; i < 5; i++) {
+
+            viewArr.push(
+                <View key = {i} style = {{backgroundColor:colorArr[i],width:375,height:150}}>
+                   <Text>{i}</Text>
+                 </View>
+            )
+        }
+        return viewArr;
+    }
+};
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor:'white',
+    },
+});
+---------------------
+作者：皆为序幕
+来源：CSDN
+原文：https://blog.csdn.net/hejiasu/article/details/78991529
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+
+
 

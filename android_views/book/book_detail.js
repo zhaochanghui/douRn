@@ -1,5 +1,5 @@
 import React,{ Component } from 'react';
-import {View,Text,Button,StyleSheet,Image,FlatList,TouchableOpacity} from 'react-native';
+import {View,Text,Button,StyleSheet,Image,FlatList,TouchableOpacity,ScrollView } from 'react-native';
 import {createBottomTabNavigator,createStackNavigator,createDrawerNavigator} from 'react-navigation';
 
 
@@ -63,7 +63,9 @@ class BookDetail extends  Component {
             let info = book.li;
 
             return(
-                <View style={{flex:1}}>
+                <View style={{}}>
+                    <ScrollView showsHorizontalScrollIndicator = {false}
+                                pagingEnabled = {true} style={{}}>
                     <View style={{flexDirection:'row',height:150}}>
                         <View style={{width:180,height:150}}>
                             <Image source={{uri:'https://img3.doubanio.com/view/subject/l/public/s1727290.jpg'}} style={{width:180,height:150}}/>
@@ -71,7 +73,7 @@ class BookDetail extends  Component {
                         <View style={{justifyContent:"space-around",paddingLeft: 20}}>
                             <View style={{}}><Text style={{fontSize:15}}>{book.author}</Text></View>
                             <View style={{}}><Text style={{fontSize:15}}>{book.publisher}</Text></View>
-                            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                            <View style={{flexDirection:'row',justifyContent:'flex-start'}}>
                                 <View style={{}}><Text style={{fontSize:15}}>{book.price}</Text></View>
                                 <View style={{marginLeft: 50}}><Text style={{fontSize:15}}>{info[6]}</Text></View>
                             </View>
@@ -82,7 +84,7 @@ class BookDetail extends  Component {
                     </View>
                     <View style={{justifyContent:'flex-start',marginTop:8}}>
                         <View style={{width:100,height:35,borderWidth:1,borderColor:"blue",lineHeight:35}}><Text style={{fontSize:20,textAlign:'center'}}>图书简介</Text></View>
-                        <View><Text>{book.intro}</Text></View>
+                        <View><Text numberOfLines={150}>{book.intro}</Text></View>
                     </View>
 
 
@@ -91,9 +93,10 @@ class BookDetail extends  Component {
 
                     <View style={{justifyContent:'flex-start',marginTop:8}}>
                         <View style={{width:100,height:35,borderWidth:1,borderColor:"blue",lineHeight:35}}><Text style={{fontSize:20,textAlign:'center'}}>作者简介</Text></View>
-                        <View><Text>{book.author_intro}</Text></View>
+                        <View><Text numberOfLines={150}>{book.author_intro}</Text></View>
                     </View>
 
+                    </ScrollView>
                 </View>
             );
 

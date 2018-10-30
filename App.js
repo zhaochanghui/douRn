@@ -99,7 +99,12 @@ const MyRoute = createBottomTabNavigator(
         music:{screen:Music}
     },
     {
-        // tabBarPosition:"bottom",
+        navigationOptions: ({navigation}) => ({
+        }),
+        tabBarOptions: {
+            activeTintColor: 'tomato',
+            inactiveTintColor: 'gray',
+        },
     }
 );
 
@@ -150,11 +155,25 @@ class Detail extends Component{
 
 
 const StackRoute=createStackNavigator({
-    main:Main,
-    list:MyRoute,
-    detail:Detail,
-    bookDetail:BookDetail,
-    movieDetail:MovieDetail,
+    main:{
+        screen:Main
+    },
+    list:{
+        screen:MyRoute,
+        navigationOptions: ({navigation}) => ({
+            header: null,
+        })
+    },
+
+    detail:{
+        screen:Detail
+    },
+    bookDetail:{
+        screen:BookDetail
+    },
+    movieDetail:{
+        screen:MovieDetail
+    },
 },{
     initialRouteName: 'list',
 });

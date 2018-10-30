@@ -1,5 +1,5 @@
 import React,{ Component } from 'react';
-import {View,Text,Button,StyleSheet,Image,FlatList,TouchableOpacity} from 'react-native';
+import {View,Text,Button,StyleSheet,Image,FlatList,TouchableOpacity,TextInput} from 'react-native';
 import {createBottomTabNavigator,createStackNavigator,createDrawerNavigator} from 'react-navigation';
 
 
@@ -12,6 +12,7 @@ class BookList extends  Component {
         };
         this.fetchData= this.fetchData.bind(this);
         this.renderData = this.renderData.bind(this);
+        this.fetchBySearch = this.fetchBySearch.bind(this);
 
     }
 
@@ -28,6 +29,10 @@ class BookList extends  Component {
             });
     }
 
+
+    fetchBySearch(){
+        alert('s搜索')
+    }
 
     componentDidMount(){
         this.fetchData();
@@ -46,11 +51,26 @@ class BookList extends  Component {
         return(
 
             <View style={{flex:1,justifyContent:'flex-start'}}>
+                {/*搜索部分*/}
+                <View style={{flexDirection:'row',height:42}}>
+                    <View style={{flex:8,height:40}}>
+                    <TextInput
+                        style={{height:38,backgroundColor: '#fff'}}
+                        placeholder='电影名...'
+                    />
+                    </View>
+                    <View style={{flex:2,padding:0,height:42}}>
+                     <Button title='搜索' onPress={this.fetchBySearch} style={{width:150,eight:42}}/>
+                    </View>
+                </View>
+                {/*搜索部分*/}
+
 
                 <FlatList
                     data={this.state.data}
                     renderItem={this.renderData}
                     keyExtractor={this._keyExtractor}
+                    style={{marginTop: 5}}
                 />
 
             {/*<View style={{flexDirection: 'row',height:100}}>*/}
@@ -91,7 +111,7 @@ class BookList extends  Component {
             <View style={{flex:1,height:100,justifyContent:'center',backgroundColor:'skyblue'}}>
                 <TouchableOpacity  onPress={() => this.props.navigate('bookDetail',{index:item.key,title:item.title})} >
                 <Text style={{textAlign: 'center'}}>标题：{item.title}</Text>
-                <Text style={{textAlign:'center'}}>{item.info}</Text>
+                <Text style={{textAlign:'center'}}  numberOfLines={10}>{item.info}</Text>
                 <Text style={{textAlign:'center'}}>{item.pj}</Text>
                 </TouchableOpacity>
             </View>
