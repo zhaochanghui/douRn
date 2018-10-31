@@ -219,7 +219,7 @@ class Spider
         // 定义采集规则
         $rules = [
             // 采集文章标题
-            'detailUrl' => ['.pl2 a', 'href'],
+            'url' => ['.pl2 a', 'href'],
             // 采集文章作者
            'info1' => ['.pl2>p', 'text'],
             'title' => ['.pl2 a', 'text','-span'],
@@ -232,8 +232,34 @@ class Spider
         ];
         $rt = QueryList::get($this->url)->rules($rules)->query()->getData();
 
-        var_dump($rt);
+        foreach ($rt as $k=>$v){
+            $url = $v['url'];
 
+            $detail = $this->getMusic($url);
+        }
+
+    }
+
+
+    //Music detail
+    public function getMusic($url)
+    {
+        $ql = QueryList::get($url);
+
+        $rt = [];
+
+        //简介
+        $brief= $ql->find('#link-report .all')->html();
+
+        //曲目
+
+        $qm= $ql->find('.track-list')->html();
+
+        //主演，导演。等等
+        $info = $ql->find('#info')->html();
+        $arr = explode("<br>",$info);
+
+        var_dump($qm);die;
     }
 
 }
@@ -256,7 +282,7 @@ $obj->movile();
 /*
 音乐
  */
-$obj->url = 'https://music.douban.com/top250?start=0';
+$obj->url = 'https://music.douban.com/top250?start=25';
 $obj->music();
 
 
