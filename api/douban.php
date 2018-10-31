@@ -249,17 +249,17 @@ class Spider
         $rt = [];
 
         //简介
-        $brief= $ql->find('#link-report .all')->html();
+        $rt['brief']= $ql->find('#link-report .all')->html();
 
         //曲目
 
-        $qm= $ql->find('.track-list')->html();
+        $rt['qm']= $ql->find('.track-list')->html();
 
         //主演，导演。等等
-        $info = $ql->find('#info')->html();
-        $arr = explode("<br>",$info);
+        $rt['info'] = $ql->find('#info')->html();
+        $rt['arr'] = explode("<br>",$rt['info']);
 
-        var_dump($qm);die;
+        var_dump($rt);die;
     }
 
 }
