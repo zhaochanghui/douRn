@@ -157,7 +157,7 @@ class Spider
             //导演，主演，时间等
             $detail = $this->movieDetail($v["detailUrl"]);
             //'intro'=>$intro,'actor'=>$actor,'showtime'=>$showtime,'label'=>$label,'info'=>$arr
-            $v['intro']=$detail['intro'];
+            $v['intro'] = $detail['intro'];
             $v['actor'] = $detail['actor'];
             $v['showtime'] = $detail['showtime'];
             $v['label'] = $detail['label'];
@@ -167,9 +167,10 @@ class Spider
             $m[$k] = $v;
         }
 
-        file_put_contents('./movie.txt',json_encode($m));
+        file_put_contents('./movie.txt', json_encode($m));
 
-        var_dump($m);die;
+        var_dump($m);
+        die;
     }
 
     public function movieDetail($url)
@@ -178,7 +179,7 @@ class Spider
 
         $rt = [];
 
-    //        $rt['title'] = $ql->find('h1')->text();
+        //        $rt['title'] = $ql->find('h1')->text();
 
         //主演，导演。等等
         $info = $ql->find('#info')->html();
@@ -188,7 +189,7 @@ class Spider
         $intro = strip_tags($intro);
         $intro = $this->trimall($intro);
 
-        $arr = explode('<br>',$info);
+        $arr = explode('<br>', $info);
 
         //演员
         $actor = $arr[2];
@@ -204,10 +205,35 @@ class Spider
 
 
         $rs = [
-            'intro'=>$intro,'actor'=>$actor,'showtime'=>$showtime,'label'=>$label,'info'=>$arr
+            'intro' => $intro, 'actor' => $actor, 'showtime' => $showtime, 'label' => $label, 'info' => $arr
         ];
 
         return $rs;
+    }
+
+
+    //音乐
+    public function music()
+    {
+
+        // 定义采集规则
+        $rules = [
+            // 采集文章标题
+            'detailUrl' => ['.pl2 a', 'href'],
+            // 采集文章作者
+           'info1' => ['.pl2>p', 'text'],
+            'title' => ['.pl2 a', 'text','-span'],
+            'rating_nums' => ['.rating_nums', 'text'],
+
+            'pjs' => ['.star .pl', 'text'],
+
+            // 采集文章内容
+            // 'content' => ['.item', 'html'],
+        ];
+        $rt = QueryList::get($this->url)->rules($rules)->query()->getData();
+
+        var_dump($rt);
+
     }
 
 }
@@ -222,6 +248,15 @@ $obj->getContent();
 
 /*
 电影，名称，演员，时间，标签，年份
- */
+
 $obj->url = 'https://movie.douban.com/top250?start=0&filter=';
 $obj->movile();
+ */
+
+/*
+音乐
+ */
+$obj->url = 'https://music.douban.com/top250?start=0';
+$obj->music();
+
+
