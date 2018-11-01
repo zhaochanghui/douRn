@@ -222,22 +222,38 @@ class Spider
             'url' => ['.pl2 a', 'href'],
             // 采集文章作者
            'info1' => ['.pl2>p', 'text'],
-            'title' => ['.pl2 a', 'text','-span'],
-            'rating_nums' => ['.rating_nums', 'text'],
+            'title' => ['.pl2 a', 'text','-span'],  //歌曲名
+            'score' => ['.rating_nums', 'text'], //评分
 
-            'pjs' => ['.star .pl', 'text'],
+            'pjs' => ['.star .pl', 'text'],   //评价数
+
+            //图片
+            'pic' => ['.nbg img', 'src'],  //图片
+
 
             // 采集文章内容
             // 'content' => ['.item', 'html'],
         ];
         $rt = QueryList::get($this->url)->rules($rules)->query()->getData();
 
-        foreach ($rt as $k=>$v){
-            $url = $v['url'];
-
-            $detail = $this->getMusic($url);
+        if(isset($rt[25])){
+            unset($rt[25]);
         }
 
+
+        foreach ($rt as $k=>$v){
+            $url = $v['url'];
+            $info2 = $v['info1'];
+            $info2 = explode('/',$info2);
+
+            $v['singer'] = $info2[0];  //演唱者
+            $v['time'] = $info2[1];  //时间
+            $v['detail'] = $this->getMusic($url);
+            $rt[$k] = $v;
+        }
+
+        var_dump($rt);
+        file_put_contents('./music.txt',json_encode($rt));
     }
 
 
@@ -259,7 +275,14 @@ class Spider
         $rt['info'] = $ql->find('#info')->html();
         $rt['arr'] = explode("<br>",$rt['info']);
 
-        var_dump($rt);die;
+        $rt['info'] = $this->trimall($rt['info']);
+
+        foreach ($rt['arr'] as $rk=>$rv){
+            $rv = $this->trimall($rv);
+            $rt['arr'][$rk] = $rv;
+        }
+
+        return $rt;
     }
 
 }
