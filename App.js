@@ -16,6 +16,9 @@ import BookDetail from './android_views/book/book_detail';
 import MovieList from './android_views/movie/movie_list';
 import MovieDetail from './android_views/movie/movie_detail';
 
+import MusicList from './android_views/music/music_list';
+import MusicDetail from './android_views/music/music_detail';
+
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -85,8 +88,10 @@ class Music extends Component{
         ),
     };
     render(){
+        const {navigate} = this.props.navigation;
+
         return(
-            <Show desc='音乐' />
+            <MusicList navigate={navigate}/>
         );
     }
 }
