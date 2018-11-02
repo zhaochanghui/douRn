@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View,Text,Button,StyleSheet,Image,TextInput,TouchableOpacity,FlatList}  from 'react-native';
+import {View,Text,Button,StyleSheet,Image,TextInput,TouchableOpacity,FlatList,Dimensions}  from 'react-native';
 
 class MusicList extends Component{
     constructor(props){
@@ -41,18 +41,21 @@ class MusicList extends Component{
 
     renderItem({item}){
         return(
-            <View style={{flexDirection: 'row',marginBottom: 5}}>
-                <TouchableOpacity onPress={ ()=> alert('点击了电影：'+item.title) }>
-                <Image source={{uri: item.pic}} style={{width:150,height:100}}/>
-                </TouchableOpacity>
-                <View style={{flex:1,flexDirection:'column',justifyContent:"flex-start",alignItems: 'flex-start',marginLeft: 8,backgroundColor:"yellow"}}>
-                    <TouchableOpacity  onPress={() => this.props.navigate('movieDetail',{index:item.key,title:item.title})} >
-                     <Text>{item.title}</Text>
-                      <Text>{item.label}</Text>
-                      <Text>{item.showtime}</Text>
-                      <Text>分数：{item.score}</Text>
-                    </TouchableOpacity>
+
+            <View style={{flexDirection:'column',justifyContent:'center',alignItems:'center',marginTop:5}}>
+                <Image source={{uri:'http://img.ivsky.com/img/tupian/t/201804/29/titian-001.jpg'}} style={{width:80,height:70}} />
+                <View style={[{flexDirection:'row',justifyContent:'space-around',height:80,backgroundColor: 'red'},this.getSize()]}>
+                    <View style={{backgroundColor:'blue'}}>
+                        <Text>qumu:{item.title}</Text>
+                        <Text>yanchang:sdsds</Text>
+                    </View>
+                    <View style={{backgroundColor:'yellow',alignItems:"flex-end"}}>
+                        <Text>shijia:xxx</Text>
+                        <Text>pingfen:9.0</Text>
+                    </View>
+
                 </View>
+                <Button title='   detail   ' onPress={this.getInput}/>
             </View>
         );
     }
@@ -61,6 +64,13 @@ class MusicList extends Component{
 
     componentDidMount(){
         this.fetchData();
+    }
+
+    getSize() {
+        return {
+            width: Dimensions.get('window').width,
+           // height: Dimensions.get('window').height
+        }
     }
 
     render(){
@@ -83,15 +93,28 @@ class MusicList extends Component{
                     />
                     <Button title='   搜索   ' onPress={this.getInput} />
                 </View>
+                <FlatList
+                    data={this.state.data}
+                    renderItem={this.renderItem}
+                    keyExtractor={this._keyExtractor}
+                    style={{marginBottom: 5}}
+                />
+                {/*<View style={{flexDirection:'column',justifyContent:'center',alignItems:'center',marginTop:5}}>*/}
+                    {/*<Image source={{uri:'http://img.ivsky.com/img/tupian/t/201804/29/titian-001.jpg'}} style={{width:80,height:70}} />*/}
+                    {/*<View style={[{flexDirection:'row',justifyContent:'space-around',height:80,backgroundColor: 'red'},this.getSize()]}>*/}
+                        {/*<View style={{backgroundColor:'blue'}}>*/}
+                            {/*<Text>qumu:xxx</Text>*/}
+                            {/*<Text>yanchang:sdsds</Text>*/}
+                        {/*</View>*/}
+                        {/*<View style={{backgroundColor:'yellow',alignItems:"flex-end"}}>*/}
+                            {/*<Text>shijia:xxx</Text>*/}
+                            {/*<Text>pingfen:9.0</Text>*/}
+                        {/*</View>*/}
 
-                <View style={{flexDirection:'column',alignItems:'center',marginTop:5}}>
-                    <Image source={{uri:'http://img.ivsky.com/img/tupian/t/201804/29/titian-001.jpg'}} style={{width:80,height:70}} />
-                    <View style={{flexDirection:'row',justifyContent:'space-between',alignSelf:'flex-start',height:80,backgroundColor: 'red'}}>
-                        <View><Text>dssdds</Text></View>
-                        <View><Text>111dssdds</Text></View>
+                    {/*</View>*/}
+                        {/*<Button title='   detail   ' onPress={this.getInput}/>*/}
+                {/*</View>*/}
 
-                    </View>
-                </View>
             </View>
         );
     }

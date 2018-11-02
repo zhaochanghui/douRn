@@ -420,4 +420,20 @@ const styles = StyleSheet.create({
 
 
 
+2018-11-2
+react-native自适应方案-设置view宽高为屏幕宽高
+https://stackoverflow.com/questions/33297367/100-width-in-react-native-flexbox
+
+Use javascript to get the width and height and add them in View's style. To get full width and height, use Dimensions.get('window').width https://facebook.github.io/react-native/docs/dimensions.html
+
+getSize() {
+    return {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height
+    }
+}
+and then,
+
+<View style={[styles.overlay, this.getSize()]}>
+
 
