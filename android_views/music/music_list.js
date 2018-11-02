@@ -42,20 +42,20 @@ class MusicList extends Component{
     renderItem({item}){
         return(
 
-            <View style={{flexDirection:'column',justifyContent:'center',alignItems:'center',marginTop:5}}>
-                <Image source={{uri:'http://img.ivsky.com/img/tupian/t/201804/29/titian-001.jpg'}} style={{width:80,height:70}} />
-                <View style={[{flexDirection:'row',justifyContent:'space-around',height:80,backgroundColor: 'red'},this.getSize()]}>
-                    <View style={{backgroundColor:'blue'}}>
-                        <Text>qumu:{item.title}</Text>
-                        <Text>yanchang:sdsds</Text>
+            <View style={{flexDirection:'column',justifyContent:'center',alignItems:'center',marginTop:5,backgroundColor:"skyblue"}}>
+                <Image source={{uri:item.pic}} style={{width:80,height:70}} />
+                <View style={[{flexDirection:'row',justifyContent:'space-around',height:40},this.getSize()]}>
+                    <View style={{}}>
+                        <Text>曲目:{item.title}</Text>
+                        <Text>时间:{item.time}</Text>
                     </View>
-                    <View style={{backgroundColor:'yellow',alignItems:"flex-end"}}>
-                        <Text>shijia:xxx</Text>
-                        <Text>pingfen:9.0</Text>
+                    <View style={{}}>
+                        <Text>演唱:{item.singer}</Text>
+                        <Text>评分:{item.score}</Text>
                     </View>
 
                 </View>
-                <Button title='   detail   ' onPress={this.getInput}/>
+                <Button title='   详情   ' onPress={()=>this.props.navigate('musicDetail',{title:item.title,url:item.url})}/>
             </View>
         );
     }

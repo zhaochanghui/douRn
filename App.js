@@ -179,6 +179,9 @@ const StackRoute=createStackNavigator({
     movieDetail:{
         screen:MovieDetail
     },
+    musicDetail:{
+        screen:MusicDetail
+    }
 },{
     initialRouteName: 'list',
 });

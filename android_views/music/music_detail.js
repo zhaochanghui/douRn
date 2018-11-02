@@ -14,7 +14,7 @@ class MusicDetail extends Component{
     render(){
         return(
             <View style={{flex:1,flexDirection: 'row',justifyContent: 'center',alignItems:'center',backgrounColor:'#F5FCFF'}}>
-                <Text>detail:{this.props.navigation.state.params.title}</Text>
+                <Text>yydetail:{this.props.navigation.state.params.title}</Text>
             </View>
         );
     }
