@@ -270,6 +270,15 @@ class Spider
         //曲目
 
         $rt['qm']= $ql->find('.track-list')->html();
+        $qm = $rt['qm'];
+        $qm = explode('<br>',$qm);
+        foreach ($qm as $qmk=>$qmv){
+            $qmv = strip_tags($qmv);
+            $qmv = $this->trimall($qmv);
+
+            $qm[$qmk] = $qmv;
+        }
+        $rt['qm'] = $qm;
 
         //主演，导演。等等
         $rt['info'] = $ql->find('#info')->html();
