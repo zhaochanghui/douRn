@@ -39,6 +39,12 @@ if($a){
     $index = $a-1;
     $one = $newarr[$index];
 
+    $pjs = $one['pjs'];
+    $pjs = str_replace('(','',$pjs);
+    $pjs = str_replace(')','',$pjs);
+    $pjs = trimall($pjs);
+    $one['pjs'] = $pjs;
+
     $str1 = json_encode($one);
     echo $str1;
 }

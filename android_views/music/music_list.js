@@ -55,7 +55,7 @@ class MusicList extends Component{
                     </View>
 
                 </View>
-                <Button title='   详情   ' onPress={()=>this.props.navigate('musicDetail',{title:item.title,url:item.url})}/>
+                <Button title='   详情   ' onPress={()=>this.props.navigate('musicDetail',{title:item.title,url1:item.url,key:item.key})}/>
             </View>
         );
     }
