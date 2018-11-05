@@ -27,7 +27,8 @@ if ($kw && $kw!='') {
     $res = [];
     foreach ($newarr as $k => $v) {
 
-        if (!strpos($v['title'], $kw)) {
+        if ((strpos($v['title'],$kw) !== false)) {
+        }else{
             continue;
         }
 
